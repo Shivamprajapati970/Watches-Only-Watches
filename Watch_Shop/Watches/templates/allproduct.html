@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} All Product {% endblock title %}
+
+{% block main-content %}
+
+<div class="container">
+    <h2 class="text-center">MyShop Watches</h2>
+    <br><br>
+    <div class="container">
+        <div class="row">
+            {% for pdc in all_data %}
+            <div class="col text-center mb-4">
+                <a href="{% url 'ProductDetail' pdc.id %}" class="btn">
+                    <div class="goodnesssec buttermilk curdbgpro">
+                        <img src="{{pdc.image.url}}" width="300px" height="300px" />
+                        <div class="fw-bold">{{pdc.name}}</div>
+                        <div class="fw-bold text-danger">
+                            Rs. {{pdc.discounted_price}} /-
+                            <small class="fw-light text-decoration-line-through">
+                                {{pdc.selling_price}}
+                            </small>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    <br><br> <br> <br>
+</div>
+{% endblock main-content %}
