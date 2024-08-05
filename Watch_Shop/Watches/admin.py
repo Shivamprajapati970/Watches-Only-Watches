@@ -6,6 +6,10 @@ class ProductAdmin(admin.ModelAdmin):
     list_display=('name','selling_price','discounted_price','category','brand')
 
 
+@admin.register(Customer)
+class CustomerAdimn(admin.ModelAdmin):
+    list_display=('id','user','locality','city','state','pincode')
+
 admin.site.register(Product,ProductAdmin)
 admin.site.register(Brand_name)
 admin.site.register(Category)

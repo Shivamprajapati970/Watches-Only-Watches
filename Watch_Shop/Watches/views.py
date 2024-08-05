@@ -55,3 +55,10 @@ class CustomerRegistration(View):
         else:
             messages.warning(request,"Invalid Input Data")
         return render(request,"customerregistration.html",locals())
+    
+class ProfileView(View):
+    def get(self,request):
+        form =CustomerProfileForm()
+        return render(request,"profile.html",locals())
+    def post(self,request):
+        return render(request,"profile.html",locals())

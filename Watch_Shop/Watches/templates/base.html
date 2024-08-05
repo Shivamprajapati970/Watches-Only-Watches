@@ -56,9 +56,16 @@
               <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
             <ul class="navbar-nav  mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-disabled="true">User_name</a>
-                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    User_name
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
+                    <li><a class="dropdown-item" href="#">Order</a></li>
+                    <li><a class="dropdown-item" href="#">Logout</a></li>
+                  </ul>
+              </li>
                 <li class="nav-item">
                     <a class="nav-link active" aria-disabled="true">Cart 4</a>
                 </li>
@@ -66,7 +73,7 @@
                     <a class="nav-link active" aria-disabled="true">Wish-list</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-disabled="true">Log-In</a>
+                    <a href="{% url 'login' %}" class="nav-link active" aria-disabled="true">Login</a>
                 </li>
                 <li class="nav-item">
                   <a href="{% url 'customer_registration' %}" class="nav-link active" aria-disabled="true">Registration</a>

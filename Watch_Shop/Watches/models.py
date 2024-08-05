@@ -1,6 +1,20 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
+STATE_CHOICE=(
+    ('Madhya Pradesh','Madhya Pradesh'),
+    ('Uttar Pradesh','Uttar Pradesh'),
+    ('Andhra Pradesh','Andhra Pradesh'),
+    ('Bihar','Bihar'),
+    ('Gujrat','Gujrat'),
+    ('Delhi','Delhi'),
+    ('Goa','Goa'),
+    ('Haryana','Haryana'),
+    ('Rajasthan','Rajasthan'),
+    ('Maharashtra','Maharashtra'),
+    
+)
 
 class Category(models.Model):
     category_name=models.CharField(max_length=50)
@@ -28,4 +42,17 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+class Customer(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    name=models.CharField(max_length=300)
+    locality=models.CharField(max_length=300)
+    city=models.CharField(max_length=100)
+    mobile=models.IntegerField(default=0)
+    pincode=models.IntegerField()
+    state=models.CharField(choices=STATE_CHOICE,max_length=200)
+
+    def __str__(self):
+        return self.name
+    
 
