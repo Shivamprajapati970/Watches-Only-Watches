@@ -14,12 +14,14 @@ urlpatterns = [
     path("category/<int:id>/",CategoryView.as_view(),name="category"),
     path("product_detail/<int:pk>/",ProductDetail.as_view(),name="ProductDetail"),
     path("profile/",ProfileView.as_view(),name="profile"),
-    path("address/",ProfileView.as_view(),name="address"),
+    path("address/",address,name="address"),
+    path("updateAddress/<int:pk>/",UpdateAddress.as_view(),name="updateAddress"),
     #path("prodcat_brand/<int:id>/",CategoryBrand.as_view(),name="ProductBrand"),
 
     # Login Authentication
     path("registration/",CustomerRegistration.as_view(),name="customer_registration"),
-    path('accounts/login/',auth_view.LoginView.as_view(template_name='login.html',authentication_form=LoginForm),name="login")
+    path('accounts/login/',auth_view.LoginView.as_view(template_name='login.html',authentication_form=LoginForm),name="login"),
+    path("logout/",auth_view.LogoutView.as_view(next_page='login'),name="logout")
 
 
 

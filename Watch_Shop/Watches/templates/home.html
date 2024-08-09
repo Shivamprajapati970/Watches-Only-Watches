@@ -50,6 +50,7 @@
     <br><br>
     <div class="container">
         <div class="row">
+            {% if request.user.is_authenticated %}
             {% for cd in category_data %}
             <div class="col-md-4 mb-4" data-wow-duration="1s" data-wow-delay="0.6s" style="animation-duration:1s; animation-delay:0.6s;animation-name:none;">
                 <div class="card goodnesssec buttermilk smbg">
@@ -62,6 +63,22 @@
                 </div>
             </div>
             {% endfor %}
+
+            {% else %}
+            {% for cd in category_data %}
+            <div class="col-md-4 mb-4" data-wow-duration="1s" data-wow-delay="0.6s" style="animation-duration:1s; animation-delay:0.6s;animation-name:none;">
+                <div class="card goodnesssec buttermilk smbg">
+                    <a href="#">
+                        <img src="{{cd.cat_img.url}}" class="card-img-top" alt="{{cd.category_name}}">
+                        <div class="card-body">
+                            <h5 class="card-title mlkpro">{{cd.category_name}}</h5>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+
+            {% endif %}
             <!--div class="col-md-4 mb-4" data-wow-duration="1s" data-wow-delay="0.6s" style="animation-duration:1s; animation-delay:0.6s;animation-name:none;">
                 <div class="card goodnesssec buttermilk smbg">
                     <a href="/category/">
