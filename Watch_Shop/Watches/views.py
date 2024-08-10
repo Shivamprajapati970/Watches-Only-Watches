@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404   #get_object_or_404
 from django.http import HttpResponse 
 from django.views import View
 from .models import *
@@ -83,6 +83,7 @@ class ProfileView(View):
 def address(request):
     add = Customer.objects.filter(user=request.user)
     return render(request,'address.html',locals())
+
 class UpdateAddress(View):
     def get(self,request,pk):
         add=Customer.objects.get(pk=pk)
@@ -107,14 +108,60 @@ class UpdateAddress(View):
 
         return redirect('address')
     
+def deletaddress(request,pk):
+    Customer.objects.get(id=pk).delete()
+    return redirect('address')
+    
 def add_to_cart(request):
     user=request.user
-    productId=request.GET.get('prod_id')
-    product=Product.objects.get(id=productId)
+    product_id=request.GET.get('prod_id')
+    print(product_id)
+    print(type(product_id))
+    product=Product.objects.get(id=product_id)
     Cart(user=user,product=product).save()
-    return redirect("/cart")
+    return redirect("showcart")
 
 def show_cart(request):
     user=request.user
     cart=Cart.objects.filter(user=user)
+    amount=0
+    for p in cart:
+        value = p.quantity * p.product.discounted_price
+        amount = amount + value
+        totalamount=amount + 60
     return render(request,"add_to_cart.html",locals())
+
+def remove_item(request,id):
+    Cart.objects.get(id=id).delete()
+    return redirect("showcart")
+
+
+def increase_quantity(request, pk):
+    cart_item = get_object_or_404(Cart, id=pk,user=request.user)
+    cart_item.quantity += 1
+    cart_item.save()
+    
+    return redirect('showcart')
+
+def decrease_quantity(request,pk):
+    cart_item = get_object_or_404(Cart, id=pk,user=request.user)
+    
+    if cart_item.quantity > 1:
+        cart_item.quantity -= 1
+        cart_item.save()
+    else:
+        cart_item.delete()
+    
+    return redirect('showcart')
+
+class checkout(View):
+    def get(self,request):
+        user=request.user
+        add=Customer.objects.filter(user=user)
+        cart_item=Cart.objects.filter(user=user)
+        amount=0
+        for p in cart_item:
+            value = p.quantity * p.product.discounted_price
+            amount = amount + value
+        totalamount=amount + 60
+        return render(request,"checkout.html",locals())
