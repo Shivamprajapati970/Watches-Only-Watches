@@ -3,6 +3,8 @@ from django.http import HttpResponse
 from django.views import View
 from .models import *
 from .form import *
+import razorpay
+from django.conf import settings
 from django.contrib import messages
 
 # Create your views here.
@@ -164,4 +166,44 @@ class checkout(View):
             value = p.quantity * p.product.discounted_price
             amount = amount + value
         totalamount=amount + 60
+        razoramount=int(totalamount * 100)
+        client=razorpay.Client(auth=(settings.RAZOR_KEY_ID, settings.RAZOR_KEY_SECRET))
+        data = {"amount": razoramount, "currency":"INR", "receipt":"order_rcptid_12"}
+        payment_respose = client.order.create(data=data)
+        print(payment_respose)
+
+        order_id=payment_respose['id']
+        order_status=payment_respose['status']
+        if order_status == 'created':
+            payment=Payment(
+                user=user,
+                amount=totalamount,
+                razorpay_order_id=order_id,
+                razorpay_payment_status=order_status
+            )
+            payment.save()
         return render(request,"checkout.html",locals())
+
+def payment_done(request):
+    order_id=request.GET.get('order_id')
+    payment_id=request.GET.get('payment_id')
+    cust_id=int(request.GET.get('cust_id'))
+
+    user=request.user
+    customer=Customer.objects.get(id=cust_id)
+    payment=Payment.objects.get(razorpay_order_id=order_id)
+    payment.paid=True
+    payment.razorpay_payment_id=payment_id
+    payment.save()
+
+    #to save order details in customer
+    cart=Cart.objects.filter(user=user)
+    for c in cart:
+        PlacedOrder(user=user,customer=customer,product=c.product,quantity=c.quantity,payment=payment).save()
+        c.delete()
+    return redirect("orders")
+    
+
+
+
+#OjsWD6YMFOhi9G Razorpay marchent id

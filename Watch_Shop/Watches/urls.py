@@ -23,6 +23,9 @@ urlpatterns = [
     path("remove_item/<int:id>/",remove_item, name="remove_item"),
     path("increase_quantity/<int:pk>/",increase_quantity,name="increase_quantity"),
     path("decrease_quantity/<int:pk>/",decrease_quantity,name="decrease_quantity"),
+    path('paymentdone/',payment_done,name="paymentdone"),
+    path("orders/",Home,name="orders"),
+
     #path("prodcat_brand/<int:id>/",CategoryBrand.as_view(),name="ProductBrand"),
 
     # Login Authentication

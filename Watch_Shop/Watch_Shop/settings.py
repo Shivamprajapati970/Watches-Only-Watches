@@ -126,3 +126,6 @@ LOGIN_REDIRECT_URL='/home/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+RAZOR_KEY_ID = "rzp_test_LxRqAytA5m1RfA"
+RAZOR_KEY_SECRET = "5IXsKXQ4NR89wHUZNs3GNVur"

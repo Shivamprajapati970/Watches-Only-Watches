@@ -14,6 +14,14 @@ class CustomerAdimn(admin.ModelAdmin):
 class CartAdmin(admin.ModelAdmin):
     list_display=('id','user','product','quantity')
 
+@admin.register(Payment)
+class PaymentAdmin(admin.ModelAdmin):
+    list_display=['id','user','amount','razorpay_order_id','razorpay_payment_status','razorpay_payment_id','paid']
+
+@admin.register(PlacedOrder)
+class PlacedOrderAdmin(admin.ModelAdmin):
+    list_display=['id','user','customer','product','quantity','ordered_date','status','payment']
+
 
 admin.site.register(Product,ProductAdmin)
 admin.site.register(Brand_name)
