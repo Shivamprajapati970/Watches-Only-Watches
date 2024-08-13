@@ -24,7 +24,8 @@ urlpatterns = [
     path("increase_quantity/<int:pk>/",increase_quantity,name="increase_quantity"),
     path("decrease_quantity/<int:pk>/",decrease_quantity,name="decrease_quantity"),
     path('paymentdone/',payment_done,name="paymentdone"),
-    path("orders/",Home,name="orders"),
+    path("orders/",Orders,name="orders"),
+    path("search/",search,name="search"),
 
     #path("prodcat_brand/<int:id>/",CategoryBrand.as_view(),name="ProductBrand"),
 

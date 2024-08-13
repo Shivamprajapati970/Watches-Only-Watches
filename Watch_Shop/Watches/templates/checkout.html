@@ -79,7 +79,7 @@ var options = {
         //alert(response.razorpay_payment_id);
         //alert(response.razorpay_order_id);
         //alert(response.razorpay_signature)         //
-        window.location.href='http://127.0.0.1:8000//paymentdone/?order_id=${response.razorpay_order_id}&payment_id=${response.razorpay_payment_id}&cust_id=${form.elements["custid"].value}'
+        window.location.href = `http://127.0.0.1:8000/paymentdone/?order_id=${response.razorpay_order_id}&payment_id=${response.razorpay_payment_id}&cust_id=${form.elements["custid"].value}`;
     },
     /*"prefill": {
         "name": "Gaurav Kumar",

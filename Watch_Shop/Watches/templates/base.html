@@ -52,9 +52,9 @@
               </li>
               
             </ul>
-            <form class="d-flex" role="search">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-success" type="submit">Search</button>
+            <form class="d-flex" role="search" action="/search/">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
+              <button class="btn btn-outline-dark" type="submit">Search</button>
             </form>
             <ul class="navbar-nav  mb-lg-0">
                 <li class="nav-item dropdown">
@@ -63,16 +63,16 @@
                   </a>
                   <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
-                    <li><a class="dropdown-item" href="#">Order</a></li>
+                    <li><a class="dropdown-item" href="{% url 'orders' %}">Order</a></li>
                     
                   </ul>
               </li>
                 <li class="nav-item">
-                    <a href="{% url 'showcart' %}" class="nav-link active" aria-disabled="true">MyCart</a>
+                    <a href="{% url 'showcart' %}" class="nav-link active text-white"><span class="badge bg-danger">{% if totalitem > 0 %}{{totalitem}} {% endif %}</span>MyCart</a>
                 </li>
-                <li class="nav-item">
+                <!--li class="nav-item">
                     <a class="nav-link active" aria-disabled="true">Wish-list</a>
-                </li>
+                </li-->
                 <li class="nav-item">
                   <form action="{% url 'logout' %}" method="post">
                     {% csrf_token %}

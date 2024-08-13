@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect,get_object_or_404   #get_object_or_404
 from django.http import HttpResponse 
 from django.views import View
+from django.db.models import Q
 from .models import *
 from .form import *
 import razorpay
@@ -14,10 +15,18 @@ def index(request):
 
 def Home(request):
     category_data=Category.objects.all()
+    #for show total cart itme value in navbar
+    totalitem=0
+    if request.user.is_authenticated:
+        totalitem=len(Cart.objects.filter(user=request.user))
     return render(request,"home.html",locals())
 
 def AllProduct(request):
     all_data=Product.objects.all()
+    #for show total cart itme value in navbar
+    totalitem=0
+    if request.user.is_authenticated:
+        totalitem=len(Cart.objects.filter(user=request.user))
     return render(request,"allproduct.html",locals())
 
 class CategoryView(View):
@@ -25,6 +34,10 @@ class CategoryView(View):
         category_data=Category.objects.all()
         #Brand=Brand_name.objects.all()
         prod_data_cat=Product.objects.filter(category=id)
+        #for show total cart itme value in navbar
+        totalitem=0
+        if request.user.is_authenticated:
+            totalitem=len(Cart.objects.filter(user=request.user))
         return render(request,"category.html",locals())
         
     
@@ -41,6 +54,10 @@ class CategoryView(View):
 class ProductDetail(View):
     def get(self,request,pk):
         product=Product.objects.get(pk=pk)
+        #for show total cart itme value in navbar
+        totalitem=0
+        if request.user.is_authenticated:
+            totalitem=len(Cart.objects.filter(user=request.user))
         return render(request,"product_details.html",locals())
     
 
@@ -61,6 +78,11 @@ class CustomerRegistration(View):
 class ProfileView(View):
     def get(self,request):
         form =CustomerProfileForm()
+        #for show total cart itme value in navbar
+        totalitem=0
+        if request.user.is_authenticated:
+            totalitem=len(Cart.objects.filter(user=request.user))
+    
         return render(request,"profile.html",locals())
     def post(self,request):
         form=CustomerProfileForm(request.POST)
@@ -84,12 +106,20 @@ class ProfileView(View):
     
 def address(request):
     add = Customer.objects.filter(user=request.user)
+    #for show total cart itme value in navbar
+    totalitem=0
+    if request.user.is_authenticated:
+        totalitem=len(Cart.objects.filter(user=request.user))
     return render(request,'address.html',locals())
 
 class UpdateAddress(View):
     def get(self,request,pk):
         add=Customer.objects.get(pk=pk)
         form=CustomerProfileForm(instance=add)     #instance is fill all data in form
+        #for show total cart itme value in navbar
+        totalitem=0
+        if request.user.is_authenticated:
+            totalitem=len(Cart.objects.filter(user=request.user))
         return render(request,"UpdateAddress.html",locals())
     def post(self,request,pk):
         form=CustomerProfileForm(request.POST)
@@ -131,6 +161,10 @@ def show_cart(request):
         value = p.quantity * p.product.discounted_price
         amount = amount + value
         totalamount=amount + 60
+    #for show total cart itme value in navbar
+    totalitem=0
+    if request.user.is_authenticated:
+        totalitem=len(Cart.objects.filter(user=request.user))
     return render(request,"add_to_cart.html",locals())
 
 def remove_item(request,id):
@@ -155,6 +189,15 @@ def decrease_quantity(request,pk):
         cart_item.delete()
     
     return redirect('showcart')
+
+def Orders(request):
+    orders_data=PlacedOrder.objects.filter(user=request.user)
+    #for show total cart itme value in navbar
+    totalitem=0
+    if request.user.is_authenticated:
+        totalitem=len(Cart.objects.filter(user=request.user))
+
+    return render(request,'orders.html',locals())
 
 class checkout(View):
     def get(self,request):
@@ -182,12 +225,18 @@ class checkout(View):
                 razorpay_payment_status=order_status
             )
             payment.save()
+
+        #for show total cart itme value in navbar
+        totalitem=0
+        if request.user.is_authenticated:
+            totalitem=len(Cart.objects.filter(user=request.user))
         return render(request,"checkout.html",locals())
 
 def payment_done(request):
     order_id=request.GET.get('order_id')
     payment_id=request.GET.get('payment_id')
-    cust_id=int(request.GET.get('cust_id'))
+    cust_id=request.GET.get('cust_id')
+    
 
     user=request.user
     customer=Customer.objects.get(id=cust_id)
@@ -202,8 +251,21 @@ def payment_done(request):
         PlacedOrder(user=user,customer=customer,product=c.product,quantity=c.quantity,payment=payment).save()
         c.delete()
     return redirect("orders")
+
+
+def search(request):
+    query=request.GET['search']
+    product=Product.objects.filter(Q(name__icontains=query))
+     #for show total cart itme value in navbar
+    totalitem=0
+    if request.user.is_authenticated:
+        totalitem=len(Cart.objects.filter(user=request.user))
+        
+    return render(request,"search.html",locals())
+
+
     
 
 
 
-#OjsWD6YMFOhi9G Razorpay marchent id
+#OjsWD6YMFOhi9G Razorpay marchent id   success@razorpay
