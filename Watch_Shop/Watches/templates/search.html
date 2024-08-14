@@ -26,7 +26,7 @@
         </div>
     </div-->
 
-    <div class="container">
+    <!--div class="container">
         <div class="col-sm-12">
             <div class="row">
                 {% for pdc in product %}
@@ -47,8 +47,29 @@
                 {% endfor %}
             </div>
         </div>
-        
-    <br><br> <br> <br>
+    </div>
+    <br><br> <br> <br-->
+
+    <div class="container">
+        <div class="row">
+            {% for cd in product %}
+            <div class="col-md-4 mb-4" data-wow-duration="1s" data-wow-delay="0.6s" style="animation-duration:1s; animation-delay:0.6s;animation-name:none;">
+                <div class="card goodnesssec buttermilk smbg">
+                    <a href="{% url 'ProductDetail' cd.id %}">
+                        <img src="{{cd.image.url}}" class="card-img-top" alt="{{cd.category_name}}"width="300px" height="300px">
+                        <div class="fw-bold text-black text-center">{{cd.name|slice:":50"}}</div>
+                        <div class="fw-bold text-danger text-center">
+                            Rs. {{cd.discounted_price}} /-
+                            <small class="fw-light text-decoration-line-through">
+                                {{cd.selling_price}}
+                            </small>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
 
 </div>
 {% endblock main-content %}

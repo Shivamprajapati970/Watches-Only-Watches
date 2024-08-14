@@ -22,7 +22,26 @@ def Home(request):
     return render(request,"home.html",locals())
 
 def AllProduct(request):
-    all_data=Product.objects.all()
+    category_data=Category.objects.all()
+    brand_data=Brand_name.objects.all()
+    category_id=request.GET.get("cat_id")
+    brand_id=request.GET.get("brand_id")
+    if category_id:
+        all_data=Product.objects.filter(category=category_id)
+
+    elif brand_id:
+        all_data=Product.objects.filter(brand=brand_id)
+     
+    elif request.method=="POST":
+        price1=request.POST['price']
+        price=float(price1)*200
+        print(price)
+        all_data=Product.objects.filter(selling_price__range=[0,price])
+    else:
+        all_data=Product.objects.all()
+
+    
+
     #for show total cart itme value in navbar
     totalitem=0
     if request.user.is_authenticated:

@@ -11,6 +11,7 @@ urlpatterns = [
     path("",index),
     path("home/",Home),
     path("allproduct/",AllProduct),
+    path("allproduct/<int:uid>/",AllProduct,name="allproduct"),
     path("category/<int:id>/",CategoryView.as_view(),name="category"),
     path("product_detail/<int:pk>/",ProductDetail.as_view(),name="ProductDetail"),
     path("profile/",ProfileView.as_view(),name="profile"),

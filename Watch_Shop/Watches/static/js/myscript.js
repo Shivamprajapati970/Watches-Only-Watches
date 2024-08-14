@@ -104,3 +104,8 @@ $('.minus-wishlist').click(function(){
         }
     })
 })
+
+function valuechange(){
+    val=document.getElementById("value").value;
+    document.getElementById('show').innerHTML=(val)*200
+}
