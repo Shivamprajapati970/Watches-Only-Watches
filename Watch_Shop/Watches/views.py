@@ -13,6 +13,41 @@ def index(request):
     category_data=Category.objects.all()
     return render(request,"home.html",locals())
 
+def AboutUs(request):
+    #for show total cart itme value in navbar
+    totalitem=0
+    if request.user.is_authenticated:
+        totalitem=len(Cart.objects.filter(user=request.user))
+    return render(request,"aboutus.html",locals())
+
+
+class Contactus(View):
+    def get(self,request):
+        totalitem=0
+        if request.user.is_authenticated:
+            totalitem=len(Cart.objects.filter(user=request.user))
+        return render(request,"contactus.html",locals())
+    
+    def post(self,request):
+        if request.user.is_authenticated:
+            user = request.user
+            name = request.POST.get('name')
+            email = request.POST.get('email')
+            number = request.POST.get('number')
+            subject = request.POST.get('subject')
+            message = request.POST.get('message')
+
+            contact_save=ContactUs(user=user,name=name,email=email,number=number,subject=subject,message=message)
+            contact_save.save()
+            messages.success(request, 'Your message has been sent successfully!')
+            return redirect('contactus')
+
+        else:
+            messages.warning(request, 'You need to be logged in to send a message.')
+            return redirect('contactus')
+        #return render(request,"contactus.html")
+
+
 def Home(request):
     category_data=Category.objects.all()
     #for show total cart itme value in navbar
@@ -24,10 +59,15 @@ def Home(request):
 def AllProduct(request):
     category_data=Category.objects.all()
     brand_data=Brand_name.objects.all()
+    cate_id=request.GET.get("cate_id")
+    print(cate_id)
     category_id=request.GET.get("cat_id")
     brand_id=request.GET.get("brand_id")
     if category_id:
         all_data=Product.objects.filter(category=category_id)
+
+    elif cate_id:
+        all_data=Product.objects.filter(category=cate_id)
 
     elif brand_id:
         all_data=Product.objects.filter(brand=brand_id)
@@ -48,31 +88,11 @@ def AllProduct(request):
         totalitem=len(Cart.objects.filter(user=request.user))
     return render(request,"allproduct.html",locals())
 
-class CategoryView(View):
-    def get(self,request,id):
-        category_data=Category.objects.all()
-        #Brand=Brand_name.objects.all()
-        prod_data_cat=Product.objects.filter(category=id)
-        #for show total cart itme value in navbar
-        totalitem=0
-        if request.user.is_authenticated:
-            totalitem=len(Cart.objects.filter(user=request.user))
-        return render(request,"category.html",locals())
-        
-    
-# class CategoryBrand(View):
-#     def get(self,request,id):
-#         Brand=Brand_name.objects.all()
-#         print(id)
-#         prod_data_cat=Product.objects.filter(brand=id)
-#         # brand=request.GET.get("brand")
-#         # prod_data_cat=Product.objects.filter(category=id).value(brand)
-#         return render(request,"category.html",locals())
 
-        
 class ProductDetail(View):
     def get(self,request,pk):
         product=Product.objects.get(pk=pk)
+        rel_product=Product.objects.filter(brand=product.brand).exclude(id=pk)
         #for show total cart itme value in navbar
         totalitem=0
         if request.user.is_authenticated:

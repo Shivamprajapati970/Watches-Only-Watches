@@ -22,6 +22,9 @@ class PaymentAdmin(admin.ModelAdmin):
 class PlacedOrderAdmin(admin.ModelAdmin):
     list_display=['id','user','customer','product','quantity','ordered_date','status','payment']
 
+@admin.register(ContactUs)
+class ContactUsAdmin(admin.ModelAdmin):
+    list_display=['id','name','email','number','subject','message']
 
 admin.site.register(Product,ProductAdmin)
 admin.site.register(Brand_name)

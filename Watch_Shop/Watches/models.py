@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
 # Create your models here.
 STATE_CHOICE=(
     ('Madhya Pradesh','Madhya Pradesh'),
@@ -95,3 +96,15 @@ class PlacedOrder(models.Model):
         @property
         def total_cost(self):
              return self.quantity * self.product.discounted_price
+        
+
+class ContactUs(models.Model):
+     user=models.ForeignKey(User,on_delete=models.CASCADE)
+     name=models.CharField(max_length=200)
+     email=models.CharField(max_length=200)
+     number=models.IntegerField(default=0)
+     subject=models.CharField(max_length=250)
+     message=models.TextField()
+
+     def __str__(self):
+          return self.name

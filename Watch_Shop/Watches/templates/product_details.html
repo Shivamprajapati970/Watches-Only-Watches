@@ -6,7 +6,9 @@
 
 {% block banner-slider %}
  <div class="container">
+    
     <div class="row flex justify-content-between mt-5">
+        <hr>
         <div class="img2 col-lg-5 mt-5">
             <img src="{{product.image.url}}" class="image col-xs-6 col-sm-12 col-lg-12 mt-3 text-sm-center w-100 h-75" alt="{{product.name}}" />
         </div>
@@ -25,10 +27,31 @@
             </form>
             
             <div class=" btn btn-warning shadow px-5 py-2"><a href="{% url 'showcart' %}" class="text-decoration-none text-white">Buy Now</a></div>
-            <br><br><br>
-
-            
         </div>
+        <hr>
     </div>
+    <br>
  </div>
 {% endblock banner-slider %}
+{% block main-content %}
+    <div class="container">
+        <div class="row">
+            {% for cd in rel_product %}
+            <div class="col-md-4 mb-4" data-wow-duration="1s" data-wow-delay="0.6s" style="animation-duration:1s; animation-delay:0.6s;animation-name:none;">
+                <div class="card goodnesssec buttermilk smbg">
+                    <a href="{% url 'ProductDetail' cd.id %}">
+                        <img src="{{cd.image.url}}" class="card-img-top" alt="{{cd.category_name}}"width="300px" height="300px">
+                        <div class="fw-bold text-black text-center">{{cd.name|slice:":50"}}</div>
+                        <div class="fw-bold text-danger text-center">
+                            Rs. {{cd.discounted_price}} /-
+                            <small class="fw-light text-decoration-line-through">
+                                {{cd.selling_price}}
+                            </small>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div><br><br>
+{% endblock main-content %}
