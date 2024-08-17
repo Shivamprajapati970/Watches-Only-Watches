@@ -4,6 +4,11 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_view
 from .form import LoginForm
+from django.contrib import admin
+
+admin.site.site_header="Watches Only Watches"
+admin.site.site_title="Watches Only Watches"
+admin.site.index_title="Watches Only Watches"
 
 
 urlpatterns = [

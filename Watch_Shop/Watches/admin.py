@@ -4,6 +4,8 @@ from .models import *
 
 class ProductAdmin(admin.ModelAdmin):
     list_display=('name','selling_price','discounted_price','category','brand')
+    list_filter=('category','brand')
+    search_fields=('name',)
 
 
 @admin.register(Customer)
