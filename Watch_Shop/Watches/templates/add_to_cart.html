@@ -3,7 +3,9 @@
 {% block title %} Cart {% endblock title %}
 
 {% block main-content %}
-<div class="container my-5">
+
+
+<div class="container my-5" style="height:75dvh;overflow:auto;" id="scroll">
     <div class="row">
         {% if cart %}
              <h1 class="text-center mb-5">Shopping Cart</h1>
@@ -52,7 +54,8 @@
                                 <span id="totalamount"><strong> Rs. {{totalamount}}</strong></span>
                             </li>
                         </ul>
-                        <div class="d-grid"><a href="{% url 'checkout' %}" class="btn btn-primary">Place Order</a></div>
+                        <div class=" btn btn-primary shadow px-5 py-2"><a href="{% url 'checkout' %}" class="text-decoration-none text-white">Place Order</a></div>
+                        <div class=" btn btn-info shadow px-5 py-2"><a href="/allproduct/" class="text-decoration-none text-white">Shop Now</a></div>
                     </div>
                 </div>
            </div>
@@ -61,4 +64,5 @@
         {% endif %}
     </div>
 </div>
+
 {% endblock main-content %}

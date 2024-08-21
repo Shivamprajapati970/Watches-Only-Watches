@@ -84,3 +84,8 @@
 .goodnesssec a{
     text-decoration: none;
 }
+#scroll::-webkit-scrollbar{
+    display: none;
+    visibility: hidden;
+ 
+}
