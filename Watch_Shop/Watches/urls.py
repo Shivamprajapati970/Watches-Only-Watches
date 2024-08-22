@@ -20,7 +20,7 @@ urlpatterns = [
     path("contactus/",Contactus.as_view(),name="contactus"),
     path("allproduct/<int:uid>/",AllProduct,name="allproduct"),
     path("product_detail/<int:pk>/",ProductDetail.as_view(),name="ProductDetail"),
-    path("profile/",ProfileView.as_view(),name="profile"),
+    path("profile/",AddressView.as_view(),name="profile"),
     path("address/",address,name="address"),
     path("updateAddress/<int:pk>/",UpdateAddress.as_view(),name="updateAddress"),
     path("deletaddress/<int:pk>/",deletaddress,name="deletaddress"),
@@ -33,6 +33,7 @@ urlpatterns = [
     path('paymentdone/',payment_done,name="paymentdone"),
     path("orders/",Orders,name="orders"),
     path("search/",search,name="search"),
+    path("profile_des/",Profile_des.as_view(),name="profile_des"),
 
     #path("prodcat_brand/<int:id>/",CategoryBrand.as_view(),name="ProductBrand"),
 

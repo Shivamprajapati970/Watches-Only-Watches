@@ -114,7 +114,7 @@ class CustomerRegistration(View):
             messages.warning(request,"Invalid Input Data")
         return render(request,"customerregistration.html",locals())
     
-class ProfileView(View):
+class AddressView(View):
     def get(self,request):
         form =CustomerProfileForm()
         #for show total cart itme value in navbar
@@ -122,7 +122,7 @@ class ProfileView(View):
         if request.user.is_authenticated:
             totalitem=len(Cart.objects.filter(user=request.user))
     
-        return render(request,"profile.html",locals())
+        return render(request,"addAddress.html",locals())
     def post(self,request):
         form=CustomerProfileForm(request.POST)
         if form.is_valid():
@@ -141,7 +141,7 @@ class ProfileView(View):
         else:
             messages.warning(request,"Invalid input Data")
 
-        return render(request,"profile.html",locals())
+        return render(request,"addAddress.html",locals())
     
 def address(request):
     add = Customer.objects.filter(user=request.user)
@@ -302,7 +302,19 @@ def search(request):
         
     return render(request,"search.html",locals())
 
-
+class Profile_des(View):
+    def get(self,request):
+        # for User Name and email
+        user = request.user
+        username = user.username
+        email = user.email
+        password = user.password
+        # for some additional details 
+        add_des=Customer.objects.filter(user=request.user).first()
+        # for some orders details
+        ord_des=PlacedOrder.objects.filter(user=request.user).count()
+        
+        return render(request,"profile_des.html",locals())
     
 
 
