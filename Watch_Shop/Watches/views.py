@@ -11,6 +11,10 @@ from django.contrib import messages
 # Create your views here.
 def index(request):
     category_data=Category.objects.all()
+    #for show total cart itme value in navbar
+    totalitem=0
+    if request.user.is_authenticated:
+        totalitem=len(Cart.objects.filter(user=request.user))
     return render(request,"home.html",locals())
 
 def AboutUs(request):
