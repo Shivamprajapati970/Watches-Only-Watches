@@ -317,7 +317,10 @@ class Profile_des(View):
         add_des=Customer.objects.filter(user=request.user).first()
         # for some orders details
         ord_des=PlacedOrder.objects.filter(user=request.user).count()
-        
+        #for show total cart itme value in navbar
+        totalitem=0
+        if request.user.is_authenticated:
+            totalitem=len(Cart.objects.filter(user=request.user))
         return render(request,"profile_des.html",locals())
     
 
