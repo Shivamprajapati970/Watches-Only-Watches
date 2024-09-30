@@ -65,7 +65,7 @@
                         <div class="card goodnesssec buttermilk curdbgpro">
                             <a href="{% url 'ProductDetail' cd.id %}">
                                 <img src="{{cd.image.url}}" class="card-img-top" alt="{{cd.category_name}}" width="200px" height="200px">
-                                <div class="fw-bold text-black text-center">{{cd.name|slice:":100"}}</div>
+                                <div class="fw-bold text-black text-center">{{cd.name}}</div>
                                 <div class="fw-bold text-danger text-center">
                                     Rs. {{cd.discounted_price}} /-
                                     <small class="fw-light text-decoration-line-through">

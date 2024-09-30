@@ -63,8 +63,10 @@
 
 {% block payment-gateway %}
 <!--button id="rzp-button1">Pay with Razorpay</button-->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 <script>
+    
 var options = {
     "key": "rzp_test_LxRqAytA5m1RfA", // Enter the Key ID generated from the Dashboard
     "amount": "{{razoramount}}", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
